@@ -21,6 +21,8 @@ to this file : (android/app/src/main/java/com/serdaotest/MainActivity.kt)
 
 Install Redux Persist for preserving the state of application 
 npm i react-redux @reduxjs/toolkit redux-persist @react-native-async-storage/async-storage
+Install yup for validation:
+npm i yup
 Clear gradlew cache:
 cd android && ./gradlew clean
 

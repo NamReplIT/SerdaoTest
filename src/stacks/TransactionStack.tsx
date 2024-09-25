@@ -7,8 +7,8 @@ const Stack = createNativeStackNavigator();
 export default () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="TransactionIndex" component={TransactionScreenIndex} />
-            <Stack.Screen name="CreateEditTransaction" component={TransactionScreenCreateEdit} />
+            <Stack.Screen name="TransactionScreenIndex" component={TransactionScreenIndex} />
+            <Stack.Screen name="TransactionScreenCreateEdit" component={TransactionScreenCreateEdit} />
         </Stack.Navigator>
     );
 };

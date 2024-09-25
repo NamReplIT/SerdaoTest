@@ -1,11 +1,11 @@
 import { persistReducer as ReduxPersisReducer, persistStore as ReduxPersistStore } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import transactionReducer from './reducers/transactionReducer';
+import accountReducer from './reducers/accountReducer';
 
 /** Reducers */
 const reducers = combineReducers({
-    transactionReducer
+    accountReducer
 })
 /** Redux Persist */
 const persistConfig = {
@@ -24,8 +24,9 @@ const reduxStore = configureStore({
 
 const persistStore = ReduxPersistStore(reduxStore);
 
-
 export {
     reduxStore,
     persistStore
 };
+
+export type RootStore = ReturnType<typeof reduxStore.getState>;
