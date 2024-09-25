@@ -1,22 +1,22 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './HomeScreen';
-import TransactionScreen from './TransactionScreen';
-import { TransactionProvider } from './TransactionContext';
-
-const Stack = createNativeStackNavigator();
+import Loader from '@/components/Loader';
+import { TransactionProvider } from '@/contexts/TransactionContext';
+import Main from './Main';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { reduxStore, persistStore } from '@/stores/persistStore';
 
 const App = () => {
   return (
-    <TransactionProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Transaction" component={TransactionScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </TransactionProvider>
+    <SafeAreaProvider style={{ flex: 1 }}>
+      <Provider store={reduxStore}>
+        <PersistGate loading={<Loader />} persistor={persistStore}>
+          <TransactionProvider>
+            <Main />
+          </TransactionProvider>
+        </PersistGate>
+      </Provider>
+    </SafeAreaProvider>
   );
 };
 

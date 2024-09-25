@@ -1,4 +1,30 @@
 # Introduction
+# Setup project
+Remove package-lock.json
+Install base dependencies : npm install
+Update tsconfig.json for working with typescript
+Install npm install --save-dev babel-plugin-module-resolver for resolve directories.
+Install React Navigation for moving between screen:
+npm install @react-navigation/native
+npm install react-native-screens react-native-safe-area-context 
+npm install @react-navigation/bottom-tabs
+Update native config for using react-nativigation
+Add this :
+class MainActivity: ReactActivity() {
+  // ...
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(null)
+  }
+  // ...
+}
+to this file : (android/app/src/main/java/com/serdaotest/MainActivity.kt)
+
+Install Redux Persist for preserving the state of application 
+npm i react-redux @reduxjs/toolkit redux-persist @react-native-async-storage/async-storage
+Clear gradlew cache:
+cd android && ./gradlew clean
+
+<!-- # Introduction
 
 We're thrilled to have you at this stage of our selection process! This test is designed to assess your skills and approach to problem-solving in a practical scenario. Please carefully follow the instructions below and ensure you read through the entire document. Good luck!
 
@@ -19,4 +45,4 @@ Note: you have free rein in how you want to implement this test, give it you bes
 
 Please create a new Git repository to store both the test first version and your modifications. Document all the commands needed to install and launch this project, excluding the installation of any external SDKs/platforms, our focus will remain strictly on this project.
 
-We hope that you will enjoy taking this test, best of luck!
+We hope that you will enjoy taking this test, best of luck! -->
