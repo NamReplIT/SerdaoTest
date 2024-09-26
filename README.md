@@ -1,4 +1,3 @@
-```
 # Project Setup Guide
 
 ## Introduction
@@ -92,5 +91,3 @@ This guide will walk you through setting up the project and installing necessary
 
 ## Conclusion
 Follow these steps to successfully set up the project with all the required dependencies and configurations.
-
-```
