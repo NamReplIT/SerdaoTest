@@ -5,9 +5,8 @@ import usePresetHeader from '@/hooks/usePresetHeader';
 import { Beneficiary } from '@/schemas/beneficiarySchema';
 import { Transaction, transactionSchema } from '@/schemas/transactionSchema';
 import { RootStore } from '@/stores/persistStore';
-import { createBeneficiary, createTransaction, deleteBeneficiary, deleteTransaction, updateBeneficiary, updateTransaction } from '@/stores/reducers/accountReducer';
+import { createTransaction, deleteTransaction, updateTransaction } from '@/stores/reducers/accountReducer';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { RootState } from '@reduxjs/toolkit/query';
 import { useRef, useState } from 'react';
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -115,20 +114,17 @@ export default () => {
       undefined,
       [
         {
-          text: 'Cancel', // The cancel button, dismisses the alert without further action
+          text: 'Cancel',
           onPress: () => { },
-          style: 'cancel', // Apply cancel style to the button
+          style: 'cancel',
         },
         {
-          text: 'Delete', // The delete button, confirms and triggers deletion
+          text: 'Delete',
           onPress: () => {
-            // Dispatch the action to delete the transaction
             dispatch(deleteTransaction(state.transaction));
-
-            // Navigate back after deletion
             navigation.goBack();
           },
-          style: 'destructive' // Use destructive style to indicate a critical action
+          style: 'destructive'
         }
       ],
     );
@@ -212,85 +208,72 @@ export default () => {
 // Styles for the component
 const styles = StyleSheet.create({
   container: {
-    // The outermost container taking full width and height
     width: "100%",
     flexGrow: 1,
-    padding: 16 // Adds padding around the whole container
+    padding: 16
   },
   content: {
-    // Inner content that contains all the input fields
     width: "100%",
     flexGrow: 1,
   },
   footer: {
-    // Footer section for the submit and delete buttons
     width: "100%",
-    paddingVertical: 20, // Padding to separate the button from the inputs
+    paddingVertical: 20,
   },
   inputContainer: {
-    // Wrapper for each input field
     width: "100%",
-    marginBottom: 16, // Adds space between input fields
+    marginBottom: 16,
   },
   label: {
-    // Label text above each input field
-    marginBottom: 8, // Space between label and input field
+    marginBottom: 8,
   },
   input: {
-    // Styling for the TextInput component
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     width: '100%',
-    paddingLeft: 16, // Padding inside the input for better readability
+    paddingLeft: 16,
   },
   helperText: {
-    // Error message styling below the input fields
     fontSize: 12,
-    color: "red" // Red text to indicate an error
+    color: "red"
   },
   deleteButton: {
-    // Styling for the delete button
     width: "100%",
     paddingVertical: 16,
     alignItems: 'center',
     justifyContent: "center",
   },
   deleteButtonText: {
-    // Text color for the delete button
     color: "red"
   },
   itemContainer: {
-    // Container for each beneficiary item
-    flexDirection: "row", // Layout items in a horizontal row
-    justifyContent: "space-between", // Space between name/IBAN and the Edit button
-    alignItems: "center", // Center items vertically
-    backgroundColor: "#ffffff", // White background for each item
-    padding: 16, // Padding inside each item container
-    marginVertical: 8, // Space between item containers
-    borderRadius: 8, // Rounded corners for each item container
-    shadowColor: "#000", // Shadow for depth effect
-    shadowOffset: { width: 0, height: 2 }, // Offset shadow for vertical depth
-    shadowOpacity: 0.1, // Light shadow opacity
-    shadowRadius: 4, // Blur radius for the shadow
-    elevation: 2, // Elevation for Android shadow effect
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   itemLeft: {
-    // Container for beneficiary name and IBAN, aligned to the left
-    flexGrow: 1, // Allow it to grow and take up available space
-    justifyContent: "center", // Center content vertically
+    flexGrow: 1,
+    justifyContent: "center",
   },
   nameText: {
-    // Style for the beneficiary name text
-    fontSize: 16, // Font size for name
-    fontWeight: "bold", // Bold text for emphasis
-    color: "#333333", // Dark gray color
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333333",
   },
   ibanText: {
-    // Style for the IBAN text
-    fontSize: 14, // Smaller font size for IBAN
-    color: "#666666", // Light gray color for IBAN text
-    marginTop: 4, // Space between name and IBAN
+    fontSize: 14,
+    color: "#666666",
+    marginTop: 4,
   },
   emptyContainer: {
     minHeight: 300,

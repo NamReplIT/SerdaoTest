@@ -84,11 +84,11 @@ export default () => {
     <View style={styles.container}>
       <SectionList
         style={styles.sectionStyle}
-        sections={sections} // Combine both current week and previous transactions
+        sections={sections}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderTransactionItem}
         renderSectionHeader={renderSectionHeader}
-        renderSectionFooter={renderSectionFooter} // Render footer when the section is empty
+        renderSectionFooter={renderSectionFooter}
       />
 
       <FloatButton title="Create" onPress={() => navigateToCreateEdit()} />

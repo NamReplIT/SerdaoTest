@@ -80,53 +80,46 @@ export default () => {
  */
 const styles = StyleSheet.create({
   container: {
-    // Main container style, full width and flexible height
     position: "relative",
     width: "100%",
     flexGrow: 1,
-    backgroundColor: "#f5f5f5", // Light background color for the screen
-    padding: 16, // Padding around the container
+    backgroundColor: "#f5f5f5",
+    padding: 16,
   },
   itemContainer: {
-    // Container for each beneficiary item
-    flexDirection: "row", // Layout items in a horizontal row
-    justifyContent: "space-between", // Space between name/IBAN and the Edit button
-    alignItems: "center", // Center items vertically
-    backgroundColor: "#ffffff", // White background for each item
-    padding: 16, // Padding inside each item container
-    marginVertical: 8, // Space between item containers
-    borderRadius: 8, // Rounded corners for each item container
-    shadowColor: "#000", // Shadow for depth effect
-    shadowOffset: { width: 0, height: 2 }, // Offset shadow for vertical depth
-    shadowOpacity: 0.1, // Light shadow opacity
-    shadowRadius: 4, // Blur radius for the shadow
-    elevation: 2, // Elevation for Android shadow effect
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   itemLeft: {
-    // Container for beneficiary name and IBAN, aligned to the left
-    flexGrow: 1, // Allow it to grow and take up available space
-    justifyContent: "center", // Center content vertically
+    flexGrow: 1,
+    justifyContent: "center",
   },
   nameText: {
-    // Style for the beneficiary name text
-    fontSize: 16, // Font size for name
-    fontWeight: "bold", // Bold text for emphasis
-    color: "#333333", // Dark gray color
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333333",
   },
   ibanText: {
-    // Style for the IBAN text
-    fontSize: 14, // Smaller font size for IBAN
-    color: "#666666", // Light gray color for IBAN text
-    marginTop: 4, // Space between name and IBAN
+    fontSize: 14,
+    color: "#666666",
+    marginTop: 4,
   },
   flatlistStyle: {
-    // Style for the FlatList component
-    width: "100%", // Full width
-    flexGrow: 1, // Allow the list to grow and take up space
+    width: "100%",
+    flexGrow: 1,
   },
   flatlistContentContainerStyle: {
-    // Content container style for the FlatList
-    paddingBottom: 16, // Padding at the bottom to prevent items from being cut off
+    paddingBottom: 16,
   },
   emptyContainer: {
     width: "100%",

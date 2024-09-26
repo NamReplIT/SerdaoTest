@@ -176,52 +176,43 @@ export default () => {
 // Styles for the component
 const styles = StyleSheet.create({
   container: {
-    // The outermost container taking full width and height
     width: "100%",
     flexGrow: 1,
-    padding: 16 // Adds padding around the whole container
+    padding: 16
   },
   content: {
-    // Inner content that contains all the input fields
     width: "100%",
     flexGrow: 1,
   },
   footer: {
-    // Footer section for the submit and delete buttons
     width: "100%",
-    paddingVertical: 20, // Padding to separate the button from the inputs
+    paddingVertical: 20,
   },
   inputContainer: {
-    // Wrapper for each input field
     width: "100%",
-    marginBottom: 16, // Adds space between input fields
+    marginBottom: 16,
   },
   label: {
-    // Label text above each input field
-    marginBottom: 8, // Space between label and input field
+    marginBottom: 8,
   },
   input: {
-    // Styling for the TextInput component
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     width: '100%',
-    paddingLeft: 16, // Padding inside the input for better readability
+    paddingLeft: 16,
   },
   helperText: {
-    // Error message styling below the input fields
     fontSize: 12,
-    color: "red" // Red text to indicate an error
+    color: "red"
   },
   deleteButton: {
-    // Styling for the delete button
     width: "100%",
     paddingVertical: 16,
     alignItems: 'center',
     justifyContent: "center",
   },
   deleteButtonText: {
-    // Text color for the delete button
     color: "red"
   }
 });
