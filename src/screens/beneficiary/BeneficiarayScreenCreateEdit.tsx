@@ -1,16 +1,20 @@
 import extractValidationErrorHelper from '@/helpers/validation/extractValidationErrorHelper';
 import usePresetHeader from '@/hooks/usePresetHeader';
 import { Beneficiary, beneficiarySchema } from '@/schemas/beneficiarySchema';
+import { RootStore } from '@/stores/persistStore';
 import { createBeneficiary, deleteBeneficiary, updateBeneficiary } from '@/stores/reducers/accountReducer';
+import { validateBeneficiaryExist } from '@/utils/beneficiary';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ValidationError } from 'yup';
 
 export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const beneficiaries = useSelector((store: RootStore) => store.accountReducer.beneficiaries);
 
   // Retrieve the beneficiary from route params (if any), otherwise set undefined
   const { beneficiary } = useRoute<any>().params ?? {} as { beneficiary: Beneficiary };
@@ -39,16 +43,20 @@ export default () => {
       // Validate beneficiary data with the Yup schema
       await beneficiarySchema.validate(state.beneficiary, { abortEarly: false, stripUnknown: true });
 
-      if (isCreate) {
-        // Dispatch action to create a new beneficiary if in create mode
-        dispatch(createBeneficiary(state.beneficiary as Beneficiary));
+      if (validateBeneficiaryExist(state.beneficiary, Object.values(beneficiaries))) {
+        return Alert.alert("This benficiary is existing. Please create anther");
       } else {
-        // Dispatch action to update the beneficiary if in edit mode
-        dispatch(updateBeneficiary(state.beneficiary as Beneficiary));
-      }
+        if (isCreate) {
+          // Dispatch action to create a new beneficiary if in create mode
+          dispatch(createBeneficiary(state.beneficiary as Beneficiary));
+        } else {
+          // Dispatch action to update the beneficiary if in edit mode
+          dispatch(updateBeneficiary(state.beneficiary as Beneficiary));
+        }
 
-      // Navigate back after success
-      navigation.goBack();
+        // Navigate back after success
+        navigation.goBack();
+      }
     } catch (error) {
       // Extract validation errors if validation fails
       const validatedErrors = extractValidationErrorHelper(error as ValidationError);

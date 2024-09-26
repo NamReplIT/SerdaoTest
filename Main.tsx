@@ -1,3 +1,4 @@
+import useInitTestData from '@/hooks/useInitTestData';
 import BeneficiaryStack from '@/stacks/BeneficiaryStack';
 import HomeStack from '@/stacks/HomeStack';
 import TransactionStack from '@/stacks/TransactionStack';
@@ -7,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 const Stack = createBottomTabNavigator();
 
 export default () => {
-
+  useInitTestData();
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} >

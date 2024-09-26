@@ -5,11 +5,11 @@ import usePresetHeader from '@/hooks/usePresetHeader';
 import { Beneficiary } from '@/schemas/beneficiarySchema';
 import { Transaction, transactionSchema } from '@/schemas/transactionSchema';
 import { RootStore } from '@/stores/persistStore';
-import { createBeneficiary, createTransaction, deleteBeneficiary, updateBeneficiary, updateTransaction } from '@/stores/reducers/accountReducer';
+import { createBeneficiary, createTransaction, deleteBeneficiary, deleteTransaction, updateBeneficiary, updateTransaction } from '@/stores/reducers/accountReducer';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { RootState } from '@reduxjs/toolkit/query';
 import { useRef, useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ValidationError } from 'yup';
 
@@ -109,33 +109,30 @@ export default () => {
    * Function to handle transaction deletion.
    * Displays a confirmation alert, and if confirmed, dispatches the delete action and navigates back.
    */
-  const handerDeleteBeneficiary = () => {
-    // Alert.alert(
-    //   `Are you sure you want to delete ${state.transaction.first_name} ${state.transaction.last_name}?`,
-    //   undefined,
-    //   [
-    //     {
-    //       text: 'Cancel', // The cancel button, dismisses the alert without further action
-    //       onPress: () => { },
-    //       style: 'cancel', // Apply cancel style to the button
-    //     },
-    //     {
-    //       text: 'Delete', // The delete button, confirms and triggers deletion
-    //       onPress: () => {
-    //         // Dispatch the action to delete the transaction
-    //         dispatch(deleteBeneficiary(state.transaction));
+  const handerDelete = () => {
+    Alert.alert(
+      `Are you sure you want to delete this transaction?`,
+      undefined,
+      [
+        {
+          text: 'Cancel', // The cancel button, dismisses the alert without further action
+          onPress: () => { },
+          style: 'cancel', // Apply cancel style to the button
+        },
+        {
+          text: 'Delete', // The delete button, confirms and triggers deletion
+          onPress: () => {
+            // Dispatch the action to delete the transaction
+            dispatch(deleteTransaction(state.transaction));
 
-    //         // Navigate back after deletion
-    //         navigation.goBack();
-    //       },
-    //       style: 'destructive' // Use destructive style to indicate a critical action
-    //     }
-    //   ],
-    // );
+            // Navigate back after deletion
+            navigation.goBack();
+          },
+          style: 'destructive' // Use destructive style to indicate a critical action
+        }
+      ],
+    );
   }
-  console.log('tra ', state.transaction)
-  console.log('beneficiary ', beneficiary)
-  console.log('bens ', beneficiaries)
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -171,40 +168,42 @@ export default () => {
 
         {/** Delete button, only shown in edit mode */}
         {!isCreate && (
-          <TouchableOpacity onPress={handerDeleteBeneficiary} style={styles.deleteButton}>
+          <TouchableOpacity onPress={handerDelete} style={styles.deleteButton}>
             <Text style={styles.deleteButtonText}>Delete</Text>
           </TouchableOpacity>
         )}
       </View>
       <Modal ref={modalRef as any}>
         <Text>Select a beneficiary</Text>
-        {listBeneficiary.length > 0 ? (
-          listBeneficiary.map((item) => (
-            <View key={item.id} style={styles.itemContainer}>
-              <View style={styles.itemLeft}>
-                <Text style={styles.nameText}>
-                  {item.first_name} {item.last_name}
-                </Text>
-                <Text style={styles.ibanText}>{item.iban}</Text>
-              </View>
-              <Button
-                onPress={() => handleSelectBeneficiary(item)}
-                title={beneficiary && beneficiary.id === item.id ? "Selected" : "Select"}
-              />
+        <ScrollView style={styles.modalScrollViewStyle}>
+          {listBeneficiary.length > 0 ? (
+            listBeneficiary.map((item) => (
+              <View key={item.id} style={styles.itemContainer}>
+                <View style={styles.itemLeft}>
+                  <Text style={styles.nameText}>
+                    {item.first_name} {item.last_name}
+                  </Text>
+                  <Text style={styles.ibanText}>{item.iban}</Text>
+                </View>
+                <Button
+                  onPress={() => handleSelectBeneficiary(item)}
+                  title={beneficiary && beneficiary.id === item.id ? "Selected" : "Select"}
+                />
 
+              </View>
+            ))
+          ) : (
+            // If listBeneficiary is empty, show this view
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyText}>No beneficiaries available</Text>
+              <Button
+                title="Add Beneficiary"
+                onPress={navigateToCreateEditBeneficiary} // Navigate to the add beneficiary page
+                color="#4CAF50"
+              />
             </View>
-          ))
-        ) : (
-          // If listBeneficiary is empty, show this view
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No beneficiaries available</Text>
-            <Button
-              title="Add Beneficiary"
-              onPress={navigateToCreateEditBeneficiary} // Navigate to the add beneficiary page
-              color="#4CAF50"
-            />
-          </View>
-        )}
+          )}
+        </ScrollView>
       </Modal>
     </View>
   );
@@ -304,4 +303,8 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 20,
   },
+  modalScrollViewStyle: {
+    width: "100%",
+    maxHeight: 450
+  }
 });

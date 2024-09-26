@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 export default () => {
   const navigation = useNavigation<any>(); // Get navigation instance to handle screen transitions
   const beneficiaries = useSelector((store: RootStore) => store.accountReducer.beneficiaries); // Fetch beneficiaries from the Redux store
-
+  const listBeneficiaries = Object.values(beneficiaries);
   // Set up a header with a title using a custom hook
   usePresetHeader({
     headerTitle: "Beneficiaries"
@@ -46,19 +46,30 @@ export default () => {
     );
   }
 
+  const renderEmptyBeneficiary = () => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>No beneficiary available.</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
-      <FlatList
-        style={styles.flatlistStyle}
-        contentContainerStyle={styles.flatlistContentContainerStyle}
-        keyExtractor={item => item.id.toString()} // Use the beneficiary ID as the unique key for each item
-        data={Object.values(beneficiaries)} // Convert beneficiaries object to an array for FlatList
-        renderItem={renderItem} // Function to render each beneficiary
-      />
+      {/** List beneficiaries */}
+      {listBeneficiaries.length > 0
+        ? <FlatList
+          style={styles.flatlistStyle}
+          contentContainerStyle={styles.flatlistContentContainerStyle}
+          keyExtractor={item => item.id.toString()}
+          data={listBeneficiaries}
+          renderItem={renderItem}
+        /> :
+        renderEmptyBeneficiary()}
       {/** Floating button to navigate to the create beneficiary screen */}
       <FloatButton
         title='Create'
-        onPress={() => navigateToCreateEdit()} // Navigate to create beneficiary screen
+        onPress={() => navigateToCreateEdit()}
       />
     </View>
   );
@@ -117,4 +128,13 @@ const styles = StyleSheet.create({
     // Content container style for the FlatList
     paddingBottom: 16, // Padding at the bottom to prevent items from being cut off
   },
+  emptyContainer: {
+    width: "100%",
+    flexGrow: 1,
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#888888',
+  }
 });
